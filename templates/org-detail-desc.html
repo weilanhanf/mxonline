@@ -1,0 +1,18 @@
+{% extends 'org_base.html' %}
+{% load staticfiles %}
+
+{% block title %}机构描述页--{{ course_org.name }}{% endblock title %}
+{% block page_path %}机构描述{% endblock page_path %}
+
+{% block right_form %}
+<div class="right companycenter layout">
+    <div class="head">
+        <h1>机构介绍</h1>
+    </div>
+    <div class="des">
+        <p>{{ course_org.desc }}</p>
+    </div>
+</div>
+{% endblock  %}
+
+

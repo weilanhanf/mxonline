@@ -1,0 +1,303 @@
+﻿1.子查询是指在另一个查询语句中的SELECT子句。
+
+  例句：
+
+  SELECT * FROM t1 WHERE column1 = (SELECT column1 FROM t2);
+
+  其中，SELECT * FROM t1 ...称为Outer Query[外查询](或者Outer Statement),
+
+  SELECT column1 FROM t2 称为Sub Query[子查询]。
+
+  所以，我们说子查询是嵌套在外查询内部。而事实上它有可能在子查询内部再嵌套子查询。
+
+  子查询必须出现在圆括号之间。
+  
+
+  行级子查询
+
+  SELECT * FROM t1 WHERE (col1,col2) = (SELECT col3, col4 FROM t2 WHERE id = 10);
+
+  SELECT * FROM t1 WHERE ROW(col1,col2) = (SELECT col3, col4 FROM t2 WHERE id = 10);
+  
+  行级子查询的返回结果最多为一行。
+
+  优化子查询
+
+
+
+  -- 创建数据表
+
+  CREATE TABLE IF NOT EXISTS tdb_goods(
+    goods_id    SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    goods_name  VARCHAR(150) NOT NULL,
+    goods_cate  VARCHAR(40)  NOT NULL,
+    brand_name  VARCHAR(40)  NOT NULL,
+    goods_price DECIMAL(15,3) UNSIGNED NOT NULL DEFAULT 0,
+    is_show     BOOLEAN NOT NULL DEFAULT 1,
+    is_saleoff  BOOLEAN NOT NULL DEFAULT 0
+  );
+
+ -- 写入记录
+
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('R510VC 15.6英寸笔记本','笔记本','华硕','3399',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('Y400N 14.0英寸笔记本电脑','笔记本','联想','4899',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('G150TH 15.6英寸游戏本','游戏本','雷神','8499',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('X550CC 15.6英寸笔记本','笔记本','华硕','2799',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('X240(20ALA0EYCD) 12.5英寸超极本','超级本','联想','4999',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('U330P 13.3英寸超极本','超级本','联想','4299',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('SVP13226SCB 13.3英寸触控超极本','超级本','索尼','7999',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('iPad mini MD531CH/A 7.9英寸平板电脑','平板电脑','苹果','1998',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('iPad Air MD788CH/A 9.7英寸平板电脑 （16G WiFi版）','平板电脑','苹果','3388',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES(' iPad mini ME279CH/A 配备 Retina 显示屏 7.9英寸平板电脑 （16G WiFi版）','平板电脑','苹果','2788',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('IdeaCentre C340 20英寸一体电脑 ','台式机','联想','3499',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('Vostro 3800-R1206 台式电脑','台式机','戴尔','2899',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('iMac ME086CH/A 21.5英寸一体电脑','台式机','苹果','9188',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('AT7-7414LP 台式电脑 （i5-3450四核 4G 500G 2G独显 DVD 键鼠 Linux ）','台式机','宏碁','3699',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('Z220SFF F4F06PA工作站','服务器/工作站','惠普','4288',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('PowerEdge T110 II服务器','服务器/工作站','戴尔','5388',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('Mac Pro MD878CH/A 专业级台式电脑','服务器/工作站','苹果','28888',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES(' HMZ-T3W 头戴显示设备','笔记本配件','索尼','6999',DEFAULT,DEFAULT);
+
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('商务双肩背包','笔记本配件','索尼','99',DEFAULT,DEFAULT);
+
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('X3250 M4机架式服务器 2583i14','服务器/工作站','IBM','6888',DEFAULT,DEFAULT);
+ 
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('玄龙精英版 笔记本散热器','笔记本配件','九州风神','',DEFAULT,DEFAULT);
+
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES(' HMZ-T3W 头戴显示设备','笔记本配件','索尼','6999',DEFAULT,DEFAULT);
+
+ INSERT tdb_goods (goods_name,goods_cate,brand_name,goods_price,is_show,is_saleoff) VALUES('商务双肩背包','笔记本配件','索尼','99',DEFAULT,DEFAULT);
+
+
+
+-- 求所有电脑产品的平均价格,并且保留两位小数，AVG,MAX,MIN、COUNT、SUM为聚合函数
+
+   SELECT ROUND(AVG(goods_price),2) AS avg_price FROM tdb_goods;
+
+-- 查询所有价格大于平均价格的商品，并且按价格降序排序
+
+   SELECT goods_id,goods_name,goods_price FROM tdb_goods WHERE goods_price > 5845.10 ORDER BY goods_price DESC;
+  
+-- 使用子查询来实现
+
+  SELECT goods_id,goods_name,goods_price FROM tdb_goods 
+
+
+  WHERE goods_price > (SELECT ROUND(AVG(goods_price),2) AS avg_price FROM tdb_goods) 
+
+
+  ORDER BY goods_price DESC;
+
+
+-- 查询类型为“超记本”的商品价格
+
+ 
+   SELECT goods_price FROM tdb_goods WHERE goods_cate = '超级本';
+
+-- 查询价格大于或等于"超级本"价格的商品，并且按价格降序排列
+
+ 
+   SELECT goods_id,goods_name,goods_price FROM tdb_goods 
+
+   WHERE goods_price = ANY(SELECT goods_price FROM tdb_goods WHERE goods_cate = '超级本')
+
+   ORDER BY goods_price DESC;
+   
+
+-- = ANY 或 = SOME 等价于 IN
+
+   SELECT goods_id,goods_name,goods_price FROM tdb_goods 
+
+   WHERE goods_price IN (SELECT goods_price FROM tdb_goods WHERE goods_cate = '超级本')
+
+   ORDER BY goods_price DESC; 
+
+
+-- 创建“商品分类”表
+
+
+  CREATE TABLE IF NOT EXISTS tdb_goods_cates(
+
+    cate_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    
+    cate_name VARCHAR(40)
+
+  );
+
+-- 查询tdb_goods表的所有记录，并且按"类别"分组
+
+  SELECT goods_cate FROM tdb_goods GROUP BY goods_cate;
+
+-- 将分组结果写入到tdb_goods_cates数据表
+
+  INSERT tdb_goods_cates (cate_name) SELECT goods_cate FROM tdb_goods GROUP BY goods_cate;
+
+-- 通过tdb_goods_cates数据表来更新tdb_goods表
+
+  UPDATE tdb_goods INNER JOIN tdb_goods_cates ON goods_cate = cate_name 
+
+  SET goods_cate = cate_id ;
+
+-- 通过CREATE...SELECT来创建数据表并且同时写入记录
+ 
+  -- SELECT brand_name FROM tdb_goods GROUP BY brand_name;
+
+  CREATE TABLE tdb_goods_brands (
+
+    brand_id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+
+    brand_name VARCHAR(40) NOT NULL
+
+  ) SELECT brand_name FROM tdb_goods GROUP BY brand_name;
+
+
+-- 通过tdb_goods_brands数据表来更新tdb_goods数据表(错误)
+
+  UPDATE tdb_goods  INNER JOIN tdb_goods_brands ON brand_name = brand_name
+
+  SET brand_name = brand_id;
+
+  -- Column 'brand_name' in field list is ambigous
+
+  -- 正确
+
+  UPDATE tdb_goods AS  g  INNER JOIN tdb_goods_brands AS b ON g.brand_name = b.brand_name
+
+  SET g.brand_name = b.brand_id;
+
+-- 查看tdb_goods的数据表结构
+
+  DESC tdb_goods;
+
+-- 通过ALTER TABLE语句修改数据表结构
+
+
+  ALTER TABLE tdb_goods  
+
+  CHANGE goods_cate cate_id SMALLINT UNSIGNED NOT NULL,
+
+  CHANGE brand_name brand_id SMALLINT UNSIGNED NOT NULL;
+  
+-- 分别在tdb_goods_cates和tdb_goods_brands表插入记录
+
+   INSERT tdb_goods_cates(cate_name) VALUES('路由器'),('交换机'),('网卡');
+
+   INSERT tdb_goods_brands(brand_name) VALUES('海尔'),('清华同方'),('神舟');
+
+-- 在tdb_goods数据表写入任意记录
+
+   INSERT tdb_goods(goods_name,cate_id,brand_id,goods_price) VALUES(' LaserJet Pro P1606dn 黑白激光打印机','12','4','1849');
+
+-- 查询所有商品的详细信息(通过内连接实现)
+
+   SELECT goods_id,goods_name,cate_name,brand_name,goods_price FROM tdb_goods AS g
+
+   INNER JOIN tdb_goods_cates AS c ON g.cate_id = c.cate_id
+
+   INNER JOIN tdb_goods_brands AS b ON g.brand_id = b.brand_id\G;
+
+-- 查询所有商品的详细信息(通过左外连接实现)
+
+   SELECT goods_id,goods_name,cate_name,brand_name,goods_price FROM tdb_goods AS g
+
+   LEFT JOIN tdb_goods_cates AS c ON g.cate_id = c.cate_id
+
+   LEFT JOIN tdb_goods_brands AS b ON g.brand_id = b.brand_id\G;
+
+-- 查询所有商品的详细信息(通过右外连接实现)
+
+   SELECT goods_id,goods_name,cate_name,brand_name,goods_price FROM tdb_goods AS g
+
+   RIGHT JOIN tdb_goods_cates AS c ON g.cate_id = c.cate_id
+
+   RIGHT JOIN tdb_goods_brands AS b ON g.brand_id = b.brand_id\G;
+
+-- 无限分类的数据表设计
+
+   CREATE TABLE tdb_goods_types(
+     type_id   SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+     type_name VARCHAR(20) NOT NULL,
+     parent_id SMALLINT UNSIGNED NOT NULL DEFAULT 0
+  ); 
+
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('家用电器',DEFAULT);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('电脑、办公',DEFAULT);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('大家电',1);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('生活电器',1);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('平板电视',3);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('空调',3);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('电风扇',4);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('饮水机',4);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('电脑整机',2);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('电脑配件',2);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('笔记本',9);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('超级本',9);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('游戏本',9);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('CPU',10);
+  INSERT tdb_goods_types(type_name,parent_id) VALUES('主机',10);
+
+-- 查找所有分类及其父类
+
+  SELECT s.type_id,s.type_name,p.type_name FROM tdb_goods_types AS s LEFT JOIN tdb_goods_types AS  p ON s.parent_id = p.type_id;
+   
+-- 查找所有分类及其子类
+
+  SELECT p.type_id,p.type_name,s.type_name FROM tdb_goods_types AS p LEFT JOIN tdb_goods_types AS  s ON s.parent_id = p.type_id;
+
+-- 查找所有分类及其子类的数目
+
+  SELECT p.type_id,p.type_name,count(s.type_name) AS children_count FROM tdb_goods_types AS p LEFT JOIN tdb_goods_types AS s ON s.parent_id = p.type_id GROUP BY p.type_name ORDER BY p.type_id;
+
+-- 为tdb_goods_types添加child_count字段
+
+  ALTER TABLE tdb_goods_types ADD child_count MEDIUMINT UNSIGNED NOT NULL DEFAULT 0;
+
+-- 将刚才查询到的子类数量更新到tdb_goods_types数据表
+
+  UPDATE tdb_goods_types AS t1 INNER JOIN ( SELECT p.type_id,p.type_name,count(s.type_name) AS children_count FROM tdb_goods_types AS p 
+
+                                            LEFT JOIN tdb_goods_types AS s ON s.parent_id = p.type_id 
+                             
+                                            GROUP BY p.type_name 
+
+                                            ORDER BY p.type_id ) AS t2 
+
+  ON  t1.type_id = t2.type_id 
+
+  SET t1.child_count = t2.children_count;
+
+
+-- 复制编号为12,20的两条记录
+
+  SELECT * FROM tdb_goods WHERE goods_id IN (19,20);
+
+
+-- INSERT ... SELECT实现复制
+
+  INSERT tdb_goods(goods_name,cate_id,brand_id) SELECT goods_name,cate_id,brand_id FROM tdb_goods WHERE goods_id IN (19,20);
+
+-- 查找重复记录
+
+  SELECT goods_id,goods_name FROM tdb_goods GROUP BY goods_name HAVING count(goods_name) >= 2;
+
+-- 删除重复记录
+
+  DELETE t1 FROM tdb_goods AS t1 LEFT JOIN (SELECT goods_id,goods_name FROM tdb_goods GROUP BY goods_name HAVING count(goods_name) >= 2 ) AS t2  ON t1.goods_name = t2.goods_name  WHERE t1.goods_id > t2.goods_id;
+
