@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import re
+
 from django import forms
 from captcha.fields import CaptchaField  # 验证码字段
 
@@ -41,3 +43,15 @@ class UserInfoForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['nick_name', 'address' , 'birthday', 'mobile', 'gender']
+
+    def clean_mobile(self):
+        """
+        验证手机号是否合法. 定义函数必须以clean_开头
+        """
+        mobile = self.cleaned_data['mobile']
+        regex_mobile = r'^1[358]\d{9}$|^147\d{8}$|176\d{8}$'
+        pattern_mobile = re.compile(regex_mobile)
+        if pattern_mobile.match(mobile):
+            return mobile
+        else:
+            raise forms.ValidationError("手机号非法", code="invalid mobile")

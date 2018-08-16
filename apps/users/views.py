@@ -78,27 +78,6 @@ class LoginView(View):
             return render(request, "login.html", {"login_form": login_form})
 
 
-'''
-# django自带的orm会对sql注入攻击进行防范
-class LoginNotSafeView(View):
-    def get(self, request):
-        return redirect(reverse('index'))
-    def post(self, request):
-        user_name = request.POST.get("username", "")
-        pass_word = request.POST.get("password", "")
-
-        import pymysql
-        conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', password='123456', db='mxonline',charset='utf8' )
-        cursor = conn.cursor()
-        # 黑客可通过user或者password输入数据库语句对数据非法利用
-        sql_select = " select * from users_userprofile where email='{0}' and passworf='{1}' ".format(user_name, pass_word)
-        result = cursor.execute(sql_select)
-        for i in cursor.fetchall():
-            # 数据库所有查询结果
-            pass
-'''
-
-
 class LogoutView(View):
     # 用户退出
     def get(self, request):
@@ -217,14 +196,16 @@ class UserInfoView(LoginRequiredMixin, View):
     用户相关信息
     """
     def get(self, request):
-        return render(request, 'usercenter-info.html')
+        return render(request, 'usercenter/usercenter-info.html')
     def post(self, request):
         user_info_form = UserInfoForm(request.POST, instance=request.user)
         if user_info_form.is_valid():
             user_info_form.save()
             return JsonResponse({'status': 'success'})
         else:
-            return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
+            print(json.dumps(user_info_form.errors))
+            return JsonResponse({'status': 'failure', 'mobile': '非法'})
+            # return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
 
 
 class UploadImageView(LoginRequiredMixin, View):
@@ -268,7 +249,6 @@ class UpdatePwdView(LoginRequiredMixin, View):
             user.save()
             return JsonResponse({"status": "success", "msg": "密码修改成功"})
         else:
-
             return HttpResponse(json.dumps(modify_form.errors), content_type='application/json')
 
 
@@ -309,7 +289,7 @@ class MyCourseView(LoginRequiredMixin, View):
     """
     def get(self, request):
         user_courses = UserCourse.objects.filter(user=request.user)
-        return render(request, 'usercenter-mycourse.html', {
+        return render(request, 'usercenter/usercenter-mycourse.html', {
             "user_courses": user_courses
         })
 
@@ -325,7 +305,7 @@ class MyFavView(LoginRequiredMixin, View):
                 course_id = fav.fav_id
                 course = Course.objects.get(id=course_id)
                 fav_list.append(course)
-            return render(request, 'usercenter-fav-course.html', {
+            return render(request, 'usercenter/usercenter-fav-course.html', {
                 "course_list": fav_list,
                 "myfav": "course",
             })
@@ -336,7 +316,7 @@ class MyFavView(LoginRequiredMixin, View):
                 org_id = fav.fav_id
                 org = CourseOrg.objects.get(id=org_id)
                 fav_list.append(org)
-            return render(request, 'usercenter-fav-course.html', {
+            return render(request, 'usercenter/usercenter-fav-course.html', {
                 "org_list": fav_list,
                 "myfav": "org"
             })
@@ -347,7 +327,7 @@ class MyFavView(LoginRequiredMixin, View):
                 teacher_id = fav.fav_id
                 teacher = Teacher.objects.get(id=teacher_id)
                 fav_list.append(teacher)
-            return render(request, 'usercenter-fav-course.html', {
+            return render(request, 'usercenter/usercenter-fav-course.html', {
                 "teacher_list": fav_list,
                 "myfav": 'teacher'
             })
@@ -376,7 +356,7 @@ class MyMessageView(LoginRequiredMixin, View):
         p = Paginator(user_message, 4, request=request)
         user_message = p.page(page)
 
-        return render(request, 'usercenter-message.html', {
+        return render(request, 'usercenter/usercenter-message.html', {
             "user_message":user_message,
             "read": read,
             "message_num": message_num

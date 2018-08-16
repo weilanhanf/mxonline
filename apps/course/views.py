@@ -43,7 +43,7 @@ class CourseListView(View):
         p = Paginator(all_courses, 6, request=request)
         courses = p.page(page)
 
-        return render(request, 'course-list.html', {
+        return render(request, 'course/course-list.html', {
             'all_courses': courses,
             'hot_courses': hot_courses,
             'sort': sort,
@@ -77,7 +77,7 @@ class CourseDetailView(View):
         else:
             relate_courses = []
 
-        return render(request, 'course-detail.html', {
+        return render(request, 'course/course-detail.html', {
             "course": course,
             "relate_courses": relate_courses,
             "has_fav_org": has_fav_org,
@@ -110,7 +110,7 @@ class CourseInfoView(LoginRequiredMixin, View):
                       if user_course.course.id != int(course_id)]
         relate_courses = Course.objects.filter(id__in=course_ids).order_by('-click_nums')[:3]
 
-        return render(request, 'course-video.html', {
+        return render(request, 'course/course-video.html', {
             "course": course,
             "all_resource": all_resource,
             "relate_courses": relate_courses,
@@ -145,7 +145,7 @@ class CourseCommentView(LoginRequiredMixin, View):
         if len(all_comments) > 8:
             all_comments = all_comments[:8]
 
-        return render(request, 'course-comment.html', {
+        return render(request, 'course/course-comment.html', {
             "course": course,
             "all_comments": all_comments,
             "all_resource": all_resource,
@@ -176,7 +176,7 @@ class VideoPlayView(LoginRequiredMixin, View):
         course_ids = [user_course.course.id for user_course in all_user_courses if user_course.course.id != int(course.id)]
         relate_courses = Course.objects.filter(id__in=course_ids).order_by('-click_nums')[:3]
 
-        return render(request, 'course-play.html', {
+        return render(request, 'course/course-play.html', {
             "course": course,
             "all_resource": all_resource,
             "relate_courses": relate_courses,

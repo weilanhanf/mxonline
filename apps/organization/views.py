@@ -59,7 +59,7 @@ class OrgView(View):
         p = Paginator(all_orgs, 5, request=request)
         orgs = p.page(page)
 
-        return render(request, 'org-list.html', {
+        return render(request, 'org/org-list.html', {
             "all_cities": all_cities,
             "all_orgs": orgs,
             "orgs_nums": orgs_nums,
@@ -110,7 +110,7 @@ class OrgHomeView(View):
         if request.user.is_authenticated:
             if UserFavorite.objects.filter(user=request.user, fav_id=course_org.id, fav_type=2):
                 has_fav = True
-        return render(request, 'org-detail-homepage.html', {
+        return render(request, 'org/org-detail-homepage.html', {
             "all_courses": all_courses,
             "all_teacher": all_teacher,
             "course_org": course_org,
@@ -135,7 +135,7 @@ class OrgCourseView(View):
             if UserFavorite.objects.filter(user=request.user, fav_id=course_org.id, fav_type=2):
                 has_fav = True
 
-        return render(request, 'org-detail-course.html', {
+        return render(request, 'org/org-detail-course.html', {
             'all_courses': all_courses,
             'course_org': course_org,
             'current_page': current_page,
@@ -160,7 +160,7 @@ class OrgTeacherView(View):
             if UserFavorite.objects.filter(user=request.user, fav_id=course_org.id, fav_type=2):
                 has_fav = True
 
-        return render(request, 'org-detail-teachers.html', {
+        return render(request, 'org/org-detail-teachers.html', {
             'all_teachers': all_teachers,
             'course_org': course_org,
             'current_page': current_page,
@@ -182,7 +182,7 @@ class OrgDescView(View):
             if UserFavorite.objects.filter(user=request.user, fav_id=course_org.id, fav_type=2):
                 has_fav = True
 
-        return render(request, 'org-detail-desc.html', {
+        return render(request, 'org/org-detail-desc.html', {
             'course_org': course_org,
             'current_page': current_page,
             'has_fav': has_fav
@@ -274,7 +274,7 @@ class TeacherListView(View):
         # 讲师排行榜
         hot_teachers = Teacher.objects.all().order_by("-click_nums")[:3]
 
-        return render(request, 'teachers-list.html', {
+        return render(request, 'teacher/teachers-list.html', {
             "all_teachers": teachers,
             "teacher_num": teachers_num,
             "sort": sort,
@@ -310,7 +310,7 @@ class TeacherDetailView(LoginRequiredMixin, View):
 
         # 讲师排行榜
         sorted_teacher = Teacher.objects.all().order_by('-click_nums')[:3]
-        return render(request, 'teacher-detail.html',{
+        return render(request, 'teacher/teacher-detail.html', {
             'teacher': teacher,
             'all_course': all_course,
             'sorted_teacher': sorted_teacher,

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-    <title>慕学在线注册</title>
+    <title>HPU在线注册</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
 
@@ -66,9 +66,9 @@
 <header>
     <div class="c-box fff-box">
         <div class="wp header-box">
-            <p class="fl hd-tips">慕学在线，在线学习平台！</p>
+            <p class="fl hd-tips">河南理工大学-在线学习平台！</p>
             <ul class="fr hd-bar">
-                <li>服务电话：<span>4001008031</span></li>
+                <li>服务电话：<span>3987XXX</span></li>
                 <li><a href="{% url 'login' %}">[登录]</a></li>
                 <li class="active"><a href="{% url 'register' %}">[注册]</a></li>
             </ul>
@@ -86,13 +86,9 @@
             <div class="fl slide">
                 <div class="imgslide">
                     <ul class="imgs">
-
                         <li><a href=""><img width="483" height="472" src="{% static 'images/57a801860001c34b12000460.jpg' %}" /></a></li>
-
                         <li><a href=""><img width="483" height="472" src="{% static 'images/57a801860001c34b12000460.jpg' %}" /></a></li>
-
                         <li><a href=""><img width="483" height="472" src="{%  static 'images/57a801860001c34b12000460.jpg' %}" /></a></li>
-
                     </ul>
                 </div>
                 <div class="unslider-arrow prev"></div>
@@ -100,38 +96,8 @@
             </div>
             <div class="fl form-box">
                 <div class="tab">
-                    <!--<h2 class="active">手机注册</h2>-->
                     <h2>邮箱注册</h2>
                 </div>
-                <!--<div class="tab-form">-->
-                    <!--<form id="mobile_register_form" autocomplete="off">-->
-                        <!--<input type='hidden' name='csrfmiddlewaretoken' value='gTZljXgnpvxn0fKZ1XkWrM1PrCGSjiCZ' />-->
-                        <!--<div class="form-group marb20">-->
-                            <!--<label>手&nbsp;机&nbsp;号</label>-->
-                            <!--<input id="jsRegMobile" name="account" type="text" placeholder="请输入您的手机号码" />-->
-                        <!--</div>-->
-                        <!--<div class="form-group marb20" id="jsRefreshCode">-->
-                            <!--<label>验&nbsp;证&nbsp;码</label>-->
-                            <!--<input autocomplete="off" class="form-control-captcha mobile-register-captcha" id="mobile-register-captcha_1" name="captcha_m_1" placeholder="请输入验证码" type="text" /> <input class="form-control-captcha mobile-register-captcha" id="mobile-register-captcha_0" name="captcha_m_0" placeholder="请输入验证码" type="hidden" value="29953bacf7005e8469388b449d97d00d523c1706" /> &nbsp;<img src="/captcha/image/29953bacf7005e8469388b449d97d00d523c1706/" alt="captcha" class="captcha" />-->
-                        <!--</div>-->
-                        <!--<div class="clearfix">-->
-                            <!--<div class="form-group marb8 verify-code">-->
-                                <!--<label>短信验证码</label>-->
-                                <!--<input id="jsPhoneRegCaptcha" name="mobile_code" type="text" placeholder="输入手机验证码" />-->
-                            <!--</div>-->
-                            <!--<input class="verify-code-btn sendcode" id="jsSendCode" value="发送验证码">-->
-                        <!--</div>-->
-                        <!--<div class="form-group marb8">-->
-                            <!--<label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>-->
-                            <!--<input id="jsPhoneRegPwd" name="password_m" type="password" placeholder="请输入6-20位非中文字符密码" />-->
-                        <!--</div>-->
-                        <!--<div class="error btns" id="jsMobileTips"></div>-->
-                        <!--<div class="auto-box marb8">-->
-
-                        <!--</div>-->
-                        <!--<input class="btn btn-green" id="jsMobileRegBtn" type="button" value="注册并登录" />-->
-                    <!--</form>-->
-                <!--</div>-->
                 <div class="tab-form">
                     <form id="email_register_form" method="post" action="{% url 'register' %}" autocomplete="off">
                         {% csrf_token %}

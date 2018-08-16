@@ -174,15 +174,16 @@ $(function(){
                    _showValidateError($('#birth_day'), data.birday);
                 }else if(data.address){
                    _showValidateError($('#address'), data.address);
-                }else if(data.status == "failure"){
-                     Dml.fun.showTipsDialog({
-                        title: '保存失败',
-                        h2: data.msg
-                    });
                 }else if(data.status == "success"){
                     Dml.fun.showTipsDialog({
                         title: '保存成功',
                         h2: '个人信息修改成功！'
+                    });
+                    setTimeout(function(){window.location.href = window.location.href;},1500);
+                }else{
+                    Dml.fun.showTipsDialog({
+                        title: '保存失败',
+                        h2: '提交信息出错'
                     });
                     setTimeout(function(){window.location.href = window.location.href;},1500);
                 }
