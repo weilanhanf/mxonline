@@ -12,6 +12,10 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 
+#null 是针对数据库而言，如果 null=True, 表示数据库的该字段可以为空。
+#blank 是针对表单的，如果 blank=True，表示你的表单填写该字段的时候可以不填，比如 admin 界面下增加 model 一条记录的时候。直观的看到就是该字段不是粗体
+
+
 class UserProfile(AbstractUser):
 
     '''

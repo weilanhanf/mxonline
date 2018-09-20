@@ -29,7 +29,7 @@ PLUGINS = (
     'quickfilter',
     'sortablelist',
     'importexport'
-    # 'ueditor',  # xamdin与ueditor做插件开发
+    'ueditor',  # xamdin与ueditor做插件开发
 )
 
 

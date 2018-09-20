@@ -39,7 +39,7 @@ class CourseAdmin(object):
     # 页面刷新时间
     refresh_times = [3, 5]
     # 对model字段相应修改为富文本编辑框
-    # style_fields = {'detail': 'ueditor'}
+    style_fields = {"detail": "ueditor"}
 
     def queryset(self):
         # 重载queryset方法，来过滤出我们想要的数据的

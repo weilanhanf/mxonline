@@ -13,7 +13,7 @@ from course.models import Course
 class UserAsk(models.Model):
     """用户想要学习表单"""
 
-    name = models.CharField(max_length=20, verbose_name=u"姓名")
+    name = models.CharField(max_length=20, verbose_name=u"姓名", help_text='此字段不为空', error_messages={'blank': '用户名不能为空'})
     mobile = models.CharField(max_length=11, verbose_name=u"手机")
     # 当字段过小的时候  不会显示搜索框
     course_name = models.CharField(max_length=50, verbose_name=u"课程名")

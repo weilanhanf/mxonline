@@ -20,9 +20,9 @@ class Course(models.Model):
     teacher = models.ForeignKey(Teacher, verbose_name="课程讲师", on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=50, verbose_name=u"课程名")
     desc = models.CharField(max_length=300, verbose_name=u"课程描述")
-    detail = models.TextField(verbose_name=u"课程详情")
-    # detail = UEditorField(u'内容	', width=600, height=300, toolbars="full", imagePath="course/image/", filePath="course/image/", upload_settings={"imageMaxSize":1204000},
-    #          settings={}, command=None, blank=True)
+    # detail = models.TextField(verbose_name=u"课程详情")
+    detail = UEditorField(verbose_name='内容	', width=600, height=300, toolbars="full", imagePath="course/image/", filePath="course/image/", upload_settings={"imageMaxSize":1204000},
+             settings={}, command=None, blank=True)
     degree = models.CharField(verbose_name=u"难度", choices=DEGREE_CHOICE, max_length=100)
     learn_times = models.IntegerField(default=0, verbose_name=u"学习时长(分钟)")
     students = models.IntegerField(default=0, verbose_name=u"学习人数")
