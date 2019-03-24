@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import View
@@ -208,10 +209,8 @@ class AddFavView(View):
             # 判断当前收藏记录的类型，并在当前记录删除之后，相应类型的收藏数-1
             if int(fav_type) == 1:
                 fav_object = Course.objects.get(id=int(fav_id))
-
             elif int(fav_type) == 2:
                 fav_object = CourseOrg.objects.get(id=int(fav_id))
-
             else:
                 fav_object = Teacher.objects.get(id=int(fav_id))
 

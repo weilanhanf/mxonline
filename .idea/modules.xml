@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../GaoKaoTong/.idea/GaoKaoTong.iml" filepath="$PROJECT_DIR$/../GaoKaoTong/.idea/GaoKaoTong.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/MxOnline.iml" filepath="$PROJECT_DIR$/.idea/MxOnline.iml" />
     </modules>
   </component>

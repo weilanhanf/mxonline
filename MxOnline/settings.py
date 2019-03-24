@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'captcha',  # 图片验证
     'pure_pagination',  # 列表分页
-    'DjangoUeditor'  # 富文本编辑框 https://github.com/zhangfisher/DjangoUeditor
+    # 'DjangoUeditor'  # 富文本编辑框 https://github.com/zhangfisher/DjangoUeditor
 ]
 AUTH_USER_MODEL = "users.UserProfile"  # UserProfile模型覆盖AbstractModel
 
