@@ -93,6 +93,8 @@ WSGI_APPLICATION = 'MxOnline.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# 您需要重新配置
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -156,13 +158,15 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')   # 指定根目录
 
 
+# 您需要重新配置
+
 # 发送邮件相关配置
 EMAIL_HOST = "smtp.163.com"  # 发送邮件服务地址
 EMAIL_PORT = 25  # 设置发件服务器端口号。注意，这里有SSL和非SSL两种形式
-EMAIL_HOST_USER = "XXXXXX"  # 设置发件服务器端口号。注意，这里有SSL和非SSL两种形式
-EMAIL_HOST_PASSWORD = "XXXXXX"  # 邮箱第三方客户端登录授权码 非邮箱密码
+EMAIL_HOST_USER = "weilanhanf@163.com"  # 设置发件服务器端口号。注意，这里有SSL和非SSL两种形式
+EMAIL_HOST_PASSWORD = "hf13523104408"  # 邮箱第三方客户端登录授权码 非邮箱密码
 EMAIL_USE_TLS = False
-EMAIL_FROM = "XXXXXX"  # 邮件发送人
+EMAIL_FROM = "weilanhanf@163.com"  # 邮件发送人
 
 # 自定义分页设置
 # https://github.com/jamespacileo/django-pure-pagination
